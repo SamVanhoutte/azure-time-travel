@@ -9,6 +9,7 @@ using EngineEventGenerator.Interfaces;
 using EngineEventGenerator.Models;
 using Microsoft.Azure.Devices;
 using Microsoft.Azure.Devices.Client;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Linq;
 using IotHubConnectionStringBuilder = Microsoft.Azure.Devices.IotHubConnectionStringBuilder;
@@ -24,6 +25,7 @@ namespace EngineEventGenerator.Transmitters
         private IoTHubSettings _iotHubSettings;
         private RegistryManager _iotHubManager;
         private IDictionary<string, DeviceClient> _deviceClients;
+        private ILogger<IoTHubTransmitter> _logger;
 
         private IDictionary<string, DeviceClient> DeviceClients =>
             _deviceClients ??= new Dictionary<string, DeviceClient>();
@@ -31,9 +33,10 @@ namespace EngineEventGenerator.Transmitters
         private RegistryManager IoTHubManager => _iotHubManager ??=
             RegistryManager.CreateFromConnectionString(_iotHubSettings.IoTHubOwnerConnectionString);
 
-        public IoTHubTransmitter(IOptions<IoTHubSettings> iotHubSettings)
+        public IoTHubTransmitter(IOptions<IoTHubSettings> iotHubSettings, ILogger<IoTHubTransmitter> logger)
         {
             _iotHubSettings = iotHubSettings.Value ?? throw new ArgumentNullException(nameof(iotHubSettings));
+            _logger = logger;
         }
 
         public async Task Transmit(string[] header, List<EngineCycle> cycleList, CancellationToken cancellationToken)
@@ -52,7 +55,6 @@ namespace EngineEventGenerator.Transmitters
 
                 var msg = new Message(Encoding.UTF8.GetBytes(sensorMessage.ToString()));
                 await client.SendEventAsync(msg, cancellationToken);
-                Console.WriteLine(sensorMessage.ToString());
             }
         }
 
@@ -65,10 +67,10 @@ namespace EngineEventGenerator.Transmitters
                 var device = await IoTHubManager.GetDeviceAsync(deviceId, cancellationToken);
                 if (device == null)
                 {
-                    Console.WriteLine("Creating device " + deviceId);
+                    _logger.LogTrace($"Creating device {deviceId} as it does not yet exist");
                     await IoTHubManager.AddDeviceAsync(new Device(deviceId), cancellationToken);
                     device = await IoTHubManager.GetDeviceAsync(deviceId, cancellationToken);
-                    Console.WriteLine("Device " + deviceId + " created");
+                    _logger.LogInformation("Device " + deviceId + " created");
                 }
 
                 var deviceConnectionString =

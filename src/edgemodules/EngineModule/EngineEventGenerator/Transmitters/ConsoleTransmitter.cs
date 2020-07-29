@@ -15,6 +15,7 @@ namespace EngineEventGenerator.Transmitters
         // The following fields will not be sent with telemetry as they should not take part in it
         private static IList _fieldsToSkip = new[] {"ttf", "cycle", "engine_id"};
         
+        
         public async Task Transmit(string[] header, List<EngineCycle> cycleList, CancellationToken cancellationToken)
         {
             foreach (var item in cycleList)
