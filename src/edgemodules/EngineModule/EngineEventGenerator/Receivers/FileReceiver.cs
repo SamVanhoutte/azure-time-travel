@@ -8,6 +8,8 @@ using EngineEventGenerator.Configuration;
 using EngineEventGenerator.Interfaces;
 using EngineEventGenerator.Models;
 using Microsoft.Extensions.Options;
+using Flurl;
+using Flurl.Http;
 
 namespace EngineEventGenerator.Receivers
 {
@@ -15,10 +17,13 @@ namespace EngineEventGenerator.Receivers
     {
         // Field that contains all field names
         private static string[] header;
+
         // This dictionary keeps track of the cycles for every engine
         private IDictionary<string, CycleState> _cycleStates;
+
         // The settings for the file reading
         private FileSettings _fileSettings;
+
         // Private list that contains all engine cycles from the read file (in memory)
         private List<EngineCycle> _engineCycles;
         private ITelemetryTransmitter _telemetryTransmitter;
@@ -31,13 +36,11 @@ namespace EngineEventGenerator.Receivers
 
         public async Task Initialize()
         {
-            if (!File.Exists(_fileSettings.Filename))
-            {
-                throw new FileNotFoundException($"The engine file was not found at {Path.GetFullPath(_fileSettings.Filename)}");
-            }
+            var fileName = await EnsureFile();
+
             var firstLine = true;
             _engineCycles = new List<EngineCycle>();
-            using var reader = File.OpenText(_fileSettings.Filename);
+            using var reader = File.OpenText(fileName);
             // Read through the entire file and add all cycles to the collection
             while (!reader.EndOfStream)
             {
@@ -58,6 +61,7 @@ namespace EngineEventGenerator.Receivers
                     _engineCycles.Add(item);
                 }
             }
+
             // Initialize state for every engine
             _cycleStates = new Dictionary<string, CycleState>();
             foreach (var engineId in _engineCycles.Select(cycle => cycle.EngineId).Distinct())
@@ -71,7 +75,7 @@ namespace EngineEventGenerator.Receivers
                     });
             }
         }
-        
+
         public async Task Run(CancellationToken cancellationToken)
         {
             var maxCycle = _engineCycles.Max(item => item.Cycle);
@@ -80,10 +84,37 @@ namespace EngineEventGenerator.Receivers
             {
                 var cycleList = new List<EngineCycle> { };
                 cycleList.AddRange(
-                    _cycleStates.Select(cycleState => 
+                    _cycleStates.Select(cycleState =>
                         cycleState.Value.PopCycle()));
                 await _telemetryTransmitter.Transmit(header, cycleList, cancellationToken);
                 await Task.Delay(_fileSettings.TransmitIntervalInMilliseconds, cancellationToken);
+            }
+        }
+
+        private async Task<string> EnsureFile()
+        {
+            if (string.IsNullOrEmpty(_fileSettings.Filename))
+            {
+                throw new ArgumentException($"The file settings were not provided and no engine was found");
+            }
+
+            if (Uri.TryCreate(_fileSettings.Filename, UriKind.Absolute, out var uriResult)
+                && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps))
+            {
+                var fileName = Guid.NewGuid().ToString() + ".csv";
+                // Download from url
+                await _fileSettings.Filename.DownloadFileAsync(".", fileName);
+                return fileName;
+            }
+            else
+            {
+                if (!File.Exists(_fileSettings.Filename))
+                {
+                    throw new FileNotFoundException(
+                        $"The engine file was not found at {Path.GetFullPath(_fileSettings.Filename)}");
+                }
+
+                return _fileSettings.Filename;
             }
         }
     }
