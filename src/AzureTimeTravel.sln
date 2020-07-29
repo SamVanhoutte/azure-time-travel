@@ -3,6 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "edgemodules", "edgemodules", "{C60121B3-1CCC-4185-9B10-B2B711AB2707}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EngineModule", "EngineModule", "{0716DFE7-38CA-4D59-BAAC-B93ADD062636}"
+ProjectSection(SolutionItems) = preProject
+	edgemodules\EngineModule\DOCKERFILE = edgemodules\EngineModule\DOCKERFILE
+EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EngineEventGenerator", "edgemodules\EngineModule\EngineEventGenerator\EngineEventGenerator.csproj", "{74D1DEF1-DFA5-465A-B1E0-9250E349F1C3}"
 EndProject
