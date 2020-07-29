@@ -31,6 +31,10 @@ namespace EngineEventGenerator.Receivers
 
         public async Task Initialize()
         {
+            if (!File.Exists(_fileSettings.Filename))
+            {
+                throw new FileNotFoundException($"The engine file was not found at {Path.GetFullPath(_fileSettings.Filename)}");
+            }
             var firstLine = true;
             _engineCycles = new List<EngineCycle>();
             using var reader = File.OpenText(_fileSettings.Filename);

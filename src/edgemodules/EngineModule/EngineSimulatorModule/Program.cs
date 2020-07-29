@@ -1,9 +1,13 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.IO;
 using System.Threading.Tasks;
 using EngineEventGenerator.Configuration;
+using EngineEventGenerator.Interfaces;
+using EngineEventGenerator.Receivers;
+using EngineEventGenerator.Transmitters;
 
 namespace EngineSimulatorModule
 {
@@ -11,15 +15,23 @@ namespace EngineSimulatorModule
     {
         public static async Task Main(string[] args)
         {
-            // create service collection
-            var services = new ServiceCollection();
-            ConfigureServices(services);
+            try
+            {
+                // create service collection
+                var services = new ServiceCollection();
+                ConfigureServices(services);
 
-            // create service provider
-            var serviceProvider = services.BuildServiceProvider();
+                // create service provider
+                var serviceProvider = services.BuildServiceProvider();
 
-            // entry to run app
-            await serviceProvider.GetService<App>().Run(args);
+                // entry to run app
+                await serviceProvider.GetService<App>().Run(args);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                Console.ReadLine();
+            }
         }
 
         private static void ConfigureServices(IServiceCollection services)
@@ -30,7 +42,7 @@ namespace EngineSimulatorModule
                 builder.AddConsole();
                 builder.AddDebug();
             });
-
+    
             // build config
             var configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
@@ -42,7 +54,8 @@ namespace EngineSimulatorModule
             services.Configure<FileSettings>(configuration.GetSection("file"));
 
             // add services:
-            // services.AddTransient<IMyRespository, MyConcreteRepository>();
+            services.AddTransient<ITelemetryReceiver, FileReceiver>();
+            services.AddTransient<ITelemetryTransmitter, ConsoleTransmitter>();
 
             // add app
             services.AddTransient<App>();
