@@ -52,6 +52,7 @@ namespace EngineSimulatorModule
                 .Build();
 
             services.Configure<FileSettings>(configuration.GetSection("file"));
+            services.Configure<IoTHubSettings>(configuration.GetSection("iothub"));
 
             // add services:
             services.AddTransient<ITelemetryReceiver, FileReceiver>();
