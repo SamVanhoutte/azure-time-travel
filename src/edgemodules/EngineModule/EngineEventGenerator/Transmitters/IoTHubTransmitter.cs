@@ -41,6 +41,8 @@ namespace EngineEventGenerator.Transmitters
 
         public async Task Transmit(string[] header, List<EngineCycle> cycleList, CancellationToken cancellationToken)
         {
+            _logger.LogInformation($"Sending new cycle of telemetry");
+
             foreach (var item in cycleList)
             {
                 var client = await GetDeviceClient(item.EngineId, CancellationToken.None);
@@ -55,6 +57,7 @@ namespace EngineEventGenerator.Transmitters
 
                 var msg = new Message(Encoding.UTF8.GetBytes(sensorMessage.ToString()));
                 await client.SendEventAsync(msg, cancellationToken);
+                _logger.LogTrace(sensorMessage.ToString());
             }
         }
 
@@ -64,10 +67,10 @@ namespace EngineEventGenerator.Transmitters
             if (!DeviceClients.ContainsKey(deviceId))
             {
                 // Check if device exists
+                _logger.LogInformation($"Initializing device {deviceId}");
                 var device = await IoTHubManager.GetDeviceAsync(deviceId, cancellationToken);
                 if (device == null)
                 {
-                    _logger.LogTrace($"Creating device {deviceId} as it does not yet exist");
                     await IoTHubManager.AddDeviceAsync(new Device(deviceId), cancellationToken);
                     device = await IoTHubManager.GetDeviceAsync(deviceId, cancellationToken);
                     _logger.LogInformation("Device " + deviceId + " created");
