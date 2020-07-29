@@ -47,15 +47,16 @@ namespace EngineSimulatorModule
             var configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddJsonFile($"appsettings.dev.json", true, true)
+                .AddJsonFile("appsettings.dev.json", true, true)
                 .AddEnvironmentVariables()
                 .Build();
 
             services.Configure<FileSettings>(configuration.GetSection("file"));
+            services.Configure<IoTHubSettings>(configuration.GetSection("iothub"));
 
             // add services:
             services.AddTransient<ITelemetryReceiver, FileReceiver>();
-            services.AddTransient<ITelemetryTransmitter, ConsoleTransmitter>();
+            services.AddTransient<ITelemetryTransmitter, IoTHubTransmitter>();
 
             // add app
             services.AddTransient<App>();

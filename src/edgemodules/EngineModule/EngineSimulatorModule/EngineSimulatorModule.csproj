@@ -19,6 +19,7 @@
         <None Update="appsettings.json">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>
+        <None Remove="appsettings.dev.json" />
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\EngineEventGenerator\EngineEventGenerator.csproj" />
