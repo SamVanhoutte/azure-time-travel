@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "edgemodules", "edgemodules", "{C60121B3-1CCC-4185-9B10-B2B711AB2707}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EngineModule", "EngineModule", "{0716DFE7-38CA-4D59-BAAC-B93ADD062636}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EngineEventGenerator", "edgemodules\EngineModule\EngineEventGenerator\EngineEventGenerator.csproj", "{74D1DEF1-DFA5-465A-B1E0-9250E349F1C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EngineSimulatorModule", "edgemodules\EngineModule\EngineSimulatorModule\EngineSimulatorModule.csproj", "{C5EDA71A-5F22-4818-B58B-7354AD2AF2B8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0716DFE7-38CA-4D59-BAAC-B93ADD062636} = {C60121B3-1CCC-4185-9B10-B2B711AB2707}
+		{74D1DEF1-DFA5-465A-B1E0-9250E349F1C3} = {0716DFE7-38CA-4D59-BAAC-B93ADD062636}
+		{C5EDA71A-5F22-4818-B58B-7354AD2AF2B8} = {0716DFE7-38CA-4D59-BAAC-B93ADD062636}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{74D1DEF1-DFA5-465A-B1E0-9250E349F1C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74D1DEF1-DFA5-465A-B1E0-9250E349F1C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74D1DEF1-DFA5-465A-B1E0-9250E349F1C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74D1DEF1-DFA5-465A-B1E0-9250E349F1C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5EDA71A-5F22-4818-B58B-7354AD2AF2B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5EDA71A-5F22-4818-B58B-7354AD2AF2B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5EDA71A-5F22-4818-B58B-7354AD2AF2B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5EDA71A-5F22-4818-B58B-7354AD2AF2B8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
