@@ -46,7 +46,7 @@ namespace EngineEventGenerator.Receivers
             {
                 if (firstLine)
                 {
-                    header = (await reader.ReadLineAsync())?.Split(';');
+                    header = (await reader.ReadLineAsync())?.Split(',');
                     firstLine = false;
                 }
                 else
