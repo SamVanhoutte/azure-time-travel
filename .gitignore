@@ -16,6 +16,7 @@
 # Exclude Azureml files
 ml/outputs
 ml/tensor_logs
+ml/.azureml
 
 # User-specific files
 *.rsuser
