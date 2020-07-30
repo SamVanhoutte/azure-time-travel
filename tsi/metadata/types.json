@@ -1,0 +1,254 @@
+{
+  "put": [
+    {
+      "id": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
+      "name": "CMAPSSEngine",
+      "description": "CMAPSS Engine",
+      "variables": {
+        "EventCount": {
+          "kind": "aggregate",
+          "aggregation": {
+            "tsx": "count()"
+          }
+        },
+        "Setting1": {
+          "kind": "numeric",
+          "value": {
+            "tsx": "$event.[setting1].Double"
+          },
+          "aggregation": {
+            "tsx": "avg($value)"
+          }
+        },
+        "Setting2": {
+          "kind": "numeric",
+          "value": {
+            "tsx": "$event.[setting2].Double"
+          },
+          "aggregation": {
+            "tsx": "avg($value)"
+          }
+        },
+        "Setting3": {
+          "kind": "numeric",
+          "value": {
+            "tsx": "$event.[setting3].Double"
+          },
+          "aggregation": {
+            "tsx": "avg($value)"
+          }
+        },
+        "TempFanInlet": {
+          "kind": "numeric",
+          "value": {
+            "tsx": "$event.[temp_fan_inlet].Double"
+          },
+          "aggregation": {
+            "tsx": "avg($value)"
+          }
+        },
+        "TempLpcOutlet": {
+          "kind": "numeric",
+          "value": {
+            "tsx": "$event.[temp_lpc_outlet].Double"
+          },
+          "aggregation": {
+            "tsx": "avg($value)"
+          }
+        },
+        "TempHpcOutlet": {
+          "kind": "numeric",
+          "value": {
+            "tsx": "$event.[temp_hpc_outlet].Double"
+          },
+          "aggregation": {
+            "tsx": "avg($value)"
+          }
+        },
+        "TempLptOutlet": {
+          "kind": "numeric",
+          "value": {
+            "tsx": "$event.[temp_lpt_outlet].Double"
+          },
+          "aggregation": {
+            "tsx": "avg($value)"
+          }
+        },
+        "PressureFanInlet": {
+          "kind": "numeric",
+          "value": {
+            "tsx": "$event.[pressure_fan_inlet].Double"
+          },
+          "aggregation": {
+            "tsx": "avg($value)"
+          }
+        },
+        "PressureBypassDuct": {
+          "kind": "numeric",
+          "value": {
+            "tsx": "$event.[pressure_bypass_duct].Double"
+          },
+          "aggregation": {
+            "tsx": "avg($value)"
+          }
+        },
+        "PressureHpcOutletMax": {
+          "kind": "numeric",
+          "value": {
+            "tsx": "$event.[pressure_hpc_outlet].Double"
+          },
+          "aggregation": {
+            "tsx": "max($value)"
+          }
+        },
+        "PhysicalFanSpeed": {
+          "kind": "numeric",
+          "value": {
+            "tsx": "$event.[physical_fan_speed].Double"
+          },
+          "aggregation": {
+            "tsx": "avg($value)"
+          }
+        },
+        "PhysicalCoreSpeed": {
+          "kind": "numeric",
+          "value": {
+            "tsx": "$event.[physical_core_speed].Double"
+          },
+          "aggregation": {
+            "tsx": "avg($value)"
+          }
+        },
+        "EnginePressureRatio": {
+          "kind": "numeric",
+          "value": {
+            "tsx": "$event.[engine_pressure_ratio].Double"
+          },
+          "aggregation": {
+            "tsx": "avg($value)"
+          }
+        },
+        "StaticPressureHpcOutlet": {
+          "kind": "numeric",
+          "value": {
+            "tsx": "$event.[static_pressure_hpc_outlet].Double"
+          },
+          "aggregation": {
+            "tsx": "avg($value)"
+          }
+        },
+        "FuelFlowRationPs30": {
+          "kind": "numeric",
+          "value": {
+            "tsx": "$event.[fuel_flow_ration_ps30].Double"
+          },
+          "aggregation": {
+            "tsx": "avg($value)"
+          }
+        },
+        "CorrectedFanSpeed": {
+          "kind": "numeric",
+          "value": {
+            "tsx": "$event.[corrected_fan_speed].Double"
+          },
+          "aggregation": {
+            "tsx": "avg($value)"
+          }
+        },
+        "CorrectedCoreSpeed": {
+          "kind": "numeric",
+          "value": {
+            "tsx": "$event.[corrected_core_speed].Double"
+          },
+          "aggregation": {
+            "tsx": "avg($value)"
+          }
+        },
+        "BypassRatio": {
+          "kind": "numeric",
+          "value": {
+            "tsx": "$event.[bypass_ratio].Double"
+          },
+          "aggregation": {
+            "tsx": "avg($value)"
+          }
+        },
+        "BurnerFuelAirRatio": {
+          "kind": "numeric",
+          "value": {
+            "tsx": "$event.[burner_fuel_air_ratio].Double"
+          },
+          "aggregation": {
+            "tsx": "avg($value)"
+          }
+        },
+        "BleedEnthalpy": {
+          "kind": "numeric",
+          "value": {
+            "tsx": "$event.[bleed_enthalpy].Double"
+          },
+          "aggregation": {
+            "tsx": "avg($value)"
+          }
+        },
+        "DemandedFanSpeed": {
+          "kind": "numeric",
+          "value": {
+            "tsx": "$event.[demanded_fan_speed].Double"
+          },
+          "aggregation": {
+            "tsx": "avg($value)"
+          }
+        },
+        "DemandedCorrectedFanSpeed": {
+          "kind": "numeric",
+          "value": {
+            "tsx": "$event.[demanded_corrected_fan_speed].Double"
+          },
+          "aggregation": {
+            "tsx": "avg($value)"
+          }
+        },
+        "HptCollantBleed": {
+          "kind": "numeric",
+          "value": {
+            "tsx": "$event.[hpt_collant_bleed].Double"
+          },
+          "aggregation": {
+            "tsx": "avg($value)"
+          }
+        },
+        "LptCoolantBleed": {
+          "kind": "numeric",
+          "value": {
+            "tsx": "$event.[lpt_coolant_bleed].Double"
+          },
+          "aggregation": {
+            "tsx": "avg($value)"
+          }
+        },
+        "OutletTempDiff": {
+          "kind": "numeric",
+          "value": {
+            "tsx": "$event.[temp_lpc_outlet].Double + $event.[temp_hpc_outlet].Double"
+          },
+          "aggregation": {
+            "tsx": "left($value)"
+          },
+          "interpolation": {
+            "kind": "linear"
+          }
+        },
+        "FanSpeedDeviation": {
+          "kind": "numeric",
+          "value": {
+            "tsx": "$event.[physical_fan_speed].Double - $event.[demanded_fan_speed].Double"
+          },
+          "aggregation": {
+            "tsx": "max($value)"
+          }
+        }
+      }
+    }
+  ]
+}
