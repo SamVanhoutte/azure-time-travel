@@ -3,7 +3,19 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+
+# Default ignored files
+.idea/
+
+# Exclude local appsettings
 *.dev.json
+
+.ipynb_checkpoints
+.DS_Store
+
+# Exclude Azureml files
+ml/outputs
+ml/tensor_logs
 
 # User-specific files
 *.rsuser
@@ -350,6 +362,3 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
-
-# Default ignored files
-.idea/
