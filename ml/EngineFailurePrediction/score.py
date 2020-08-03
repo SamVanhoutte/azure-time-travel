@@ -51,22 +51,11 @@ output_sample = np.array([0])
 @input_schema('data', NumpyParameterType(input_sample))
 @output_schema(NumpyParameterType(output_sample))
 def run(data):
-    print(data)
-    data = np.array(json.loads(data)['data'])
-    img_path = data[0]
-    print('First url:', img_path)
-    img = iio.load_image_from_url(img_path, image_size=(128,256), convert_to_grey=True, keep_3d_shape=True)
-    input = np.array([img])
+    print(type(data))
+    data = np.array([data])
 
     # make prediction
-    time_series = series_model.predict(input)
+    failure_expected = series_model.predict(data)
 
-
-    p = pd.DataFrame(np.transpose(time_series), columns=['Close'])
-    p['moving'] = p['Close'].transform(lambda x: x.rolling(30, 30).mean())
-    input2 = np.array(p.tail(30)[['moving', 'Close']]).reshape(1, 60)
-
-    stage = type_model.predict(input2)
-    stage = np.argmax(stage, axis=1)[0]
-    return {'stage': str(stage), 'series': time_series.tolist()}
+    return failure_expected.tolist()
 
