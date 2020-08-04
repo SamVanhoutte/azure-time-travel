@@ -47,6 +47,8 @@ namespace EngineEventGenerator.Transmitters
             {
                 var client = await GetDeviceClient(item.EngineId, CancellationToken.None);
                 var sensorMessage = new JObject();
+                sensorMessage["engineid"] = item.EngineId;
+                sensorMessage["eventtime"] = DateTime.UtcNow;
                 for (var i = 0; i < item.SensorData.Length; i++)
                 {
                     if (!_fieldsToSkip.Contains(header[i]))
