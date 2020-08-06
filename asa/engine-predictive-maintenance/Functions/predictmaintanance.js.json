@@ -1,0 +1,12 @@
+{
+    "Name": "predictmaintanance",
+    "ScriptType": "JSFunction",
+    "Type": "Scalar",
+    "OutputType": "bigint",
+    "FunctionInputs": [
+        {
+            "DataType": "array",
+            "IsConfigurationParameter": null
+        }
+    ]
+}

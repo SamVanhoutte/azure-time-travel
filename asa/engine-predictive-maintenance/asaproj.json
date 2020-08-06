@@ -1,0 +1,22 @@
+{
+    "name": "engine-predictive-maintenance",
+    "startFile": "Transformation.asaql",
+    "configurations": [
+        {
+            "filePath": "Functions/numpyfySeq.js.json",
+            "subType": "JSFunction"
+        },
+        {
+            "filePath": "Functions/predictmaintanance.js.json",
+            "subType": "JSFunction"
+        },
+        {
+            "filePath": "JobConfig.json",
+            "subType": "JobConfig"
+        },
+        {
+            "filePath": "Inputs/engine-telemetry.json",
+            "subType": "Input"
+        }
+    ]
+}

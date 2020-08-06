@@ -1,0 +1,12 @@
+{
+    "Name": "numpyfySeq",
+    "ScriptType": "JSFunction",
+    "Type": "Scalar",
+    "OutputType": "array",
+    "FunctionInputs": [
+        {
+            "DataType": "any",
+            "IsConfigurationParameter": null
+        }
+    ]
+}
