@@ -1,0 +1,24 @@
+WITH RelevantTelemetry AS
+(
+    SELECT  engineid, EventEnqueuedUtcTime as eventtime, setting1,setting2,setting3,temp_fan_inlet,temp_lpc_outlet,temp_hpc_outlet,temp_lpt_outlet,pressure_fan_inlet,
+            pressure_bypass_duct,pressure_hpc_outlet,physical_fan_speed,physical_core_speed,engine_pressure_ratio,
+            static_pressure_hpc_outlet,fuel_flow_ration_ps30,corrected_fan_speed,corrected_core_speed,bypass_ratio,
+            burner_fuel_air_ratio,bleed_enthalpy,demanded_fan_speed,demanded_corrected_fan_speed,hpt_collant_bleed,
+            lpt_coolant_bleed
+    FROM    [engine-telemetry] 
+    TIMESTAMP BY eventtime
+),
+TimeWindows AS
+(
+    SELECT engineid, 
+        CollectTop(30) OVER (ORDER BY eventtime DESC) as WindowMeasurements 
+    FROM
+        [RelevantTelemetry]
+    WHERE engineid IS NOT NULL
+    GROUP BY TumblingWindow(hour, 24), engineid
+    HAVING COUNT(*) >= 1
+)
+
+SELECT engineid, Udf.predictmaintanance(Udf.createTimeWindows(WindowMeasurements)) as RequiresMaintenance --, WindowMeasurements
+INTO debug
+FROM TimeWindows

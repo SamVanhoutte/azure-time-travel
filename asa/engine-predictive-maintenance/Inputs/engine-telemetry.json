@@ -1,0 +1,21 @@
+{
+    "Name": "engine-telemetry",
+    "Type": "Data Stream",
+    "DataSourceType": "IoT Hub",
+    "IoTHubProperties": {
+        "IotHubNamespace": "savanh-time-travel",
+        "SharedAccessPolicyName": "iothubowner",
+        "ConsumerGroupName": "$Default",
+        "Endpoint": "messages/events",
+        "SharedAccessPolicyKey": null
+    },
+    "PartitionKey": null,
+    "DataSourceCredentialDomain": "61206663-ddba-47fe-9429-f8d83d6d106d.StreamAnalystics",
+    "Serialization": {
+        "Type": "Json",
+        "Encoding": "UTF8",
+        "FieldDelimiter": null
+    },
+    "CompressionType": "None",
+    "ScriptType": "Input"
+}
