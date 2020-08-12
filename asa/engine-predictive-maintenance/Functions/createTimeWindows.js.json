@@ -1,5 +1,5 @@
 {
-    "Name": "numpyfySeq",
+    "Name": "createTimeWindows",
     "ScriptType": "JSFunction",
     "Type": "Scalar",
     "OutputType": "array",

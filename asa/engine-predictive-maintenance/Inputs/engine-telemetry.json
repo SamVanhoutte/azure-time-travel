@@ -10,7 +10,7 @@
         "SharedAccessPolicyKey": null
     },
     "PartitionKey": null,
-    "DataSourceCredentialDomain": "0eba288c-3c4c-4722-9e74-193a01196e5a.StreamAnalystics",
+    "DataSourceCredentialDomain": "61206663-ddba-47fe-9429-f8d83d6d106d.StreamAnalystics",
     "Serialization": {
         "Type": "Json",
         "Encoding": "UTF8",
