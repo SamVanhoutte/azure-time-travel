@@ -7,12 +7,16 @@
             "subType": "JSFunction"
         },
         {
-            "filePath": "Functions/predictmaintanance.js.json",
+            "filePath": "Functions/predict.js.json",
             "subType": "JSFunction"
         },
         {
             "filePath": "JobConfig.json",
             "subType": "JobConfig"
+        },
+        {
+            "filePath": "Outputs/enginemaintenance.json",
+            "subType": "Output"
         },
         {
             "filePath": "Inputs/engine-telemetry.json",
