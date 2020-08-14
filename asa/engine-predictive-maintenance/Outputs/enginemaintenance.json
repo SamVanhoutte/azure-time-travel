@@ -1,0 +1,14 @@
+{
+    "Name": "enginemaintenance",
+    "DataSourceType": "Table Storage",
+    "TableStorageProperties": {
+        "AccountName": "savanhtimetrav5813512254",
+        "Table": "enginemaintenance",
+        "PartitionKey": "engineid",
+        "RowKey": "eventtime",
+        "BatchSize": 100,
+        "AccountKey": null
+    },
+    "DataSourceCredentialDomain": "78829077-7d63-4805-8284-fced483380fa.StreamAnalystics",
+    "ScriptType": "Output"
+}

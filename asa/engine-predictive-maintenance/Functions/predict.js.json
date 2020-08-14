@@ -1,5 +1,5 @@
 {
-    "Name": "predictmaintanance",
+    "Name": "predict",
     "ScriptType": "JSFunction",
     "Type": "Scalar",
     "OutputType": "bigint",

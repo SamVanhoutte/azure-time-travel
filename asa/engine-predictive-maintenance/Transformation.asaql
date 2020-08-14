@@ -19,6 +19,6 @@ TimeWindows AS
     HAVING COUNT(*) >= 1
 )
 
-SELECT engineid, Udf.predictmaintanance(Udf.createTimeWindows(WindowMeasurements)) as RequiresMaintenance --, WindowMeasurements
-INTO debug
-FROM TimeWindows
+SELECT  engineid, Udf.predict(Udf.createTimeWindows(WindowMeasurements)) as RequiresMaintenance, System.Timestamp() eventtime --, WindowMeasurements
+INTO    enginemaintenance
+FROM    TimeWindows
