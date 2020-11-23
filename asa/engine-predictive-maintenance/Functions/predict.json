@@ -1,0 +1,34 @@
+{
+    "Name": "predict",
+    "IntegrationType": "AzureMLService",
+    "Type": "Scalar",
+    "ScriptType": "MLFunction",
+    "URL": "http://40.118.19.29/api/v1/service/enginefailureprediction-v1/score",
+    "Key": null,
+    "BatchSize": 100,
+    "NumberOfParallelRequests": 1,
+    "FunctionInputs": [
+        {
+            "DataType": "array",
+            "IsConfigurationParameter": null
+        }
+    ],
+    "OutputType": "bigint",
+    "MLInputs": {
+        "name": "data",
+        "columnNames": [
+            {
+                "name": "data",
+                "dataType": "array",
+                "mapTo": 0
+            }
+        ]
+    },
+    "MLOutputs": [
+        {
+            "Name": "output",
+            "DataType": "int64"
+        }
+    ],
+    "CredentialDomain": null
+}

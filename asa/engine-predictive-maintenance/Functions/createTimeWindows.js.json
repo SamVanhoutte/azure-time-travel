@@ -1,12 +1,12 @@
 {
     "Name": "createTimeWindows",
-    "ScriptType": "JSFunction",
     "Type": "Scalar",
-    "OutputType": "array",
+    "ScriptType": "JSFunction",
     "FunctionInputs": [
         {
             "DataType": "any",
             "IsConfigurationParameter": null
         }
-    ]
+    ],
+    "OutputType": "array"
 }

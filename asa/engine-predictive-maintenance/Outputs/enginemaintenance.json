@@ -9,6 +9,6 @@
         "BatchSize": 100,
         "AccountKey": null
     },
-    "DataSourceCredentialDomain": "78829077-7d63-4805-8284-fced483380fa.StreamAnalystics",
+    "DataSourceCredentialDomain": "4f0acb1c-4e79-4bc9-ab21-9c9e30c2592a.StreamAnalystics",
     "ScriptType": "Output"
 }

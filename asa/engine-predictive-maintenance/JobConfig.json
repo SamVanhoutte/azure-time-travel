@@ -12,6 +12,12 @@
         "AccountName": null,
         "AccountKey": null
     },
+    "CustomCodeStorage": {
+        "AccountName": null,
+        "AccountKey": null,
+        "ContainerName": null,
+        "Path": null
+    },
     "DataSourceCredentialDomain": null,
     "Tags": {}
 }

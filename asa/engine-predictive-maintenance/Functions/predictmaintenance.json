@@ -1,0 +1,34 @@
+{
+    "Name": "predictmaintenance",
+    "IntegrationType": "AzureMLService",
+    "Type": "Scalar",
+    "ScriptType": "MLFunction",
+    "URL": "http://5cf986a6-070f-4665-873d-68b08b4b3235.westeurope.azurecontainer.io/score",
+    "Key": null,
+    "BatchSize": 1000,
+    "NumberOfParallelRequests": 1,
+    "FunctionInputs": [
+        {
+            "DataType": "array",
+            "IsConfigurationParameter": null
+        }
+    ],
+    "OutputType": "bigint",
+    "MLInputs": {
+        "name": "data",
+        "columnNames": [
+            {
+                "name": "data",
+                "dataType": "array",
+                "mapTo": 0
+            }
+        ]
+    },
+    "MLOutputs": [
+        {
+            "Name": "output",
+            "DataType": "int64"
+        }
+    ],
+    "CredentialDomain": "e8469462-411a-42b0-9a1b-03682d66dc7e.StreamAnalystics"
+}

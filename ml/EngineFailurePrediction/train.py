@@ -1,6 +1,14 @@
-# Force latest version of arcus packages
-import subprocess
-import sys
+import pip
+
+def install(package):
+    if hasattr(pip, 'main'):
+        pip.main(['install', package])
+    else:
+        pip._internal.main(['install', package])
+
+# Install OpenCV correctly
+install('opencv-python')
+
 
 # General references
 import argparse
@@ -12,7 +20,7 @@ import joblib
 # Add arcus references
 from arcus.ml import dataframes as adf
 from arcus.ml.timeseries import timeops
-from arcus.ml.images import *
+#from arcus.ml.images import *
 from arcus.ml.evaluation import classification as clev
 from arcus.azureml.environment.aml_environment import AzureMLEnvironment
 from arcus.azureml.experimenting.aml_trainer import AzureMLTrainer
