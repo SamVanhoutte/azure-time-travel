@@ -1,7 +1,7 @@
 // creates a N x 18 size array
 function createTimeWindows(engine_windows) {
     'use strict';
-
+    var result = [];
     var output = [];
 
     for(var window_id in engine_windows){
@@ -32,7 +32,7 @@ function createTimeWindows(engine_windows) {
         array.push(engine_windows[window_id].value.lpt_coolant_bleed);
         output.push(array);
     }
-    return output;
-}
-
-    
+    result.push(output);
+    return result;
+    //return output;
+}    

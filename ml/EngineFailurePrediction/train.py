@@ -1,7 +1,3 @@
-# Force latest version of arcus packages
-import subprocess
-import sys
-
 # General references
 import argparse
 import os
@@ -12,7 +8,7 @@ import joblib
 # Add arcus references
 from arcus.ml import dataframes as adf
 from arcus.ml.timeseries import timeops
-from arcus.ml.images import *
+#from arcus.ml.images import *
 from arcus.ml.evaluation import classification as clev
 from arcus.azureml.environment.aml_environment import AzureMLEnvironment
 from arcus.azureml.experimenting.aml_trainer import AzureMLTrainer
@@ -71,6 +67,7 @@ parser = argparse.ArgumentParser()
 
 # If you want to parse arguments that get passed through the estimator, this can be done here
 parser.add_argument('--epochs', type=int, dest='epochs', default=10, help='Epoch count')
+parser.add_argument('--bidirectional', type=bool, dest='bidirectional', default=False, help='Use LSTM bidirectional')
 parser.add_argument('--dropout', type=int, dest='dropout', default=0, help='Dropout percentage')
 parser.add_argument('--lstmnodes', type=int, dest='lstmnodes', default=50, help='LSTM node count')
 parser.add_argument('--batch_size', type=int, dest='batch_size', default=32, help='Batch size')
@@ -79,6 +76,7 @@ parser.add_argument('--train_test_split_ratio', type=float, dest='train_test_spl
 
 args, unknown = parser.parse_known_args()
 epoch_count = args.epochs
+bidirectional = args.bidirectional
 dropout = args.dropout / 100
 lstm_nodes = args.lstmnodes
 batch_size = args.batch_size
@@ -217,8 +215,6 @@ y_test = y_test[:, -1]
 
 
 # Build model 
-model = build_lstm(dropout = dropout, lstm_nodes=lstm_nodes, bi_directional=False)
-
 early_stopping = EarlyStopping(monitor='val_loss', mode='min', verbose=1, patience=5)
 tensorboard_callback = tf.keras.callbacks.TensorBoard('./tensor_logs', histogram_freq=1),
 model_checkpoint_callback = ModelCheckpoint(
@@ -231,7 +227,7 @@ cbs =[early_stopping, *tensorboard_callback, model_checkpoint_callback]
 
 #_run = aml_trainer.new_run(copy_folder = True, metrics = {'epochs': epoch_count, 'batch_size': batch_size, 'lstm_nodes': lstm_nodes, 'dropout': dropout})
 
-model = build_lstm(dropout = dropout, lstm_nodes=lstm_nodes, bi_directional=False)
+model = build_lstm(dropout = dropout, lstm_nodes=lstm_nodes, bi_directional=bidirectional)
 
 # shuffle data prior to training
 model.fit(X_train, y_train,

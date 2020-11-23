@@ -44,8 +44,8 @@ def init():
     print(series_model.summary())
 
 
-input_sample = np.random.rand(1,30,24)
-output_sample = np.array([0])
+input_sample = np.random.rand(2, 1, 30,24)
+output_sample = np.array([[0],[1]])
 
 
 @input_schema('data', NumpyParameterType(input_sample, enforce_shape=False))
@@ -61,6 +61,9 @@ def run(data):
     if(len(data.shape)==2):
         log_data({"message": "Reshaping to 3D array"})
         data = data.reshape(1, data.shape[0], data.shape[1])
+    if(len(data.shape)==4):
+        log_data({"message": "Reshaping 4D array to 3D array"})
+        data = data.reshape(data.shape[0], data.shape[2], data.shape[3])
 
     if(len(data.shape)!=3):
         log_data({"exception": "An array of shape (n, 30, 24) is expected as input."})
@@ -68,6 +71,9 @@ def run(data):
     if(data.shape[2] != 24):
         log_data({"exception": "The time windows should contain 24 features"})
         raise ValueError("The time windows should contain 24 features")
+    if(data.shape[1] < 30):
+        return [[0]]
+
     if(data.shape[1] != 30):
         log_data({"message": "Padding with zeroed samples"})
         data = np.pad(data, ((0, 0),(30 - data.shape[1], 0),(0, 0)), 'constant')
@@ -77,6 +83,5 @@ def run(data):
     log_data({"predictions": str(failure_expected)})
 
     return failure_expected.tolist()
-
 def log_data(logging_data: dict):
     print(json.dumps(logging_data))
