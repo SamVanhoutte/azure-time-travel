@@ -1,15 +1,3 @@
-import pip
-
-def install(package):
-    if hasattr(pip, 'main'):
-        pip.main(['install', package])
-    else:
-        pip._internal.main(['install', package])
-
-# Install OpenCV correctly
-install('opencv-python')
-
-
 # General references
 import argparse
 import os
@@ -79,6 +67,7 @@ parser = argparse.ArgumentParser()
 
 # If you want to parse arguments that get passed through the estimator, this can be done here
 parser.add_argument('--epochs', type=int, dest='epochs', default=10, help='Epoch count')
+parser.add_argument('--bidirectional', type=bool, dest='bidirectional', default=False, help='Use LSTM bidirectional')
 parser.add_argument('--dropout', type=int, dest='dropout', default=0, help='Dropout percentage')
 parser.add_argument('--lstmnodes', type=int, dest='lstmnodes', default=50, help='LSTM node count')
 parser.add_argument('--batch_size', type=int, dest='batch_size', default=32, help='Batch size')
@@ -87,6 +76,7 @@ parser.add_argument('--train_test_split_ratio', type=float, dest='train_test_spl
 
 args, unknown = parser.parse_known_args()
 epoch_count = args.epochs
+bidirectional = args.bidirectional
 dropout = args.dropout / 100
 lstm_nodes = args.lstmnodes
 batch_size = args.batch_size
@@ -225,8 +215,6 @@ y_test = y_test[:, -1]
 
 
 # Build model 
-model = build_lstm(dropout = dropout, lstm_nodes=lstm_nodes, bi_directional=False)
-
 early_stopping = EarlyStopping(monitor='val_loss', mode='min', verbose=1, patience=5)
 tensorboard_callback = tf.keras.callbacks.TensorBoard('./tensor_logs', histogram_freq=1),
 model_checkpoint_callback = ModelCheckpoint(
@@ -239,7 +227,7 @@ cbs =[early_stopping, *tensorboard_callback, model_checkpoint_callback]
 
 #_run = aml_trainer.new_run(copy_folder = True, metrics = {'epochs': epoch_count, 'batch_size': batch_size, 'lstm_nodes': lstm_nodes, 'dropout': dropout})
 
-model = build_lstm(dropout = dropout, lstm_nodes=lstm_nodes, bi_directional=False)
+model = build_lstm(dropout = dropout, lstm_nodes=lstm_nodes, bi_directional=bidirectional)
 
 # shuffle data prior to training
 model.fit(X_train, y_train,
