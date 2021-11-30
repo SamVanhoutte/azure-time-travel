@@ -9,6 +9,7 @@
 
 # Exclude local appsettings
 *.dev.json
+.vscode/**
 
 .ipynb_checkpoints
 .DS_Store
@@ -363,3 +364,11 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+.vscode/extensions.json
+.vscode/launch.json
+.vscode/settings.json
+.vscode/tasks.json
+.vscode/launch.json
+.vscode/tasks.json
+.vscode/launch.json
+.vscode/launch.json

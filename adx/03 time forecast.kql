@@ -1,0 +1,9 @@
+let min_t = toscalar(telemetry | summarize min(eventtime)); 
+let max_t = toscalar(telemetry | summarize max(eventtime));
+telemetry
+| where engineid == 'engine006'
+| make-series reads=avg(corrected_core_speed) on eventtime in range(min_t, max_t, 10m) by engineid
+| extend y_forcasted = series_decompose_forecast(reads, 7) // forecast 7 hours forward
+| render timechart with(title='Expected values next 7 hours')
+
+    
