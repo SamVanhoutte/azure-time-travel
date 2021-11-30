@@ -1,0 +1,4 @@
+telemetry
+| summarize corespeed=avg(physical_core_speed) - 9030 by engineid
+| top 25 by corespeed
+| render barchart

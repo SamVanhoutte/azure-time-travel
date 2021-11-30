@@ -1,0 +1,40 @@
+{
+    "cells": [
+        {
+            "kind": "markdown",
+            "source": "# Basic Query",
+            "outputs": []
+        },
+        {
+            "kind": "code",
+            "source": "telemetry\n| summarize corespeed=avg(physical_core_speed) - 9030 by engineid\n| top 25 by corespeed\n| render barchart  ",
+            "outputs": []
+        },
+        {
+            "kind": "markdown",
+            "source": "# Time series plotting",
+            "outputs": []
+        },
+        {
+            "kind": "code",
+            "source": "let min_t = toscalar(telemetry | summarize min(eventtime)); \nlet max_t = toscalar(telemetry | summarize max(eventtime));\ntelemetry\n| make-series reads=avg(corrected_core_speed) on eventtime in range(min_t, max_t, 10m) by engineid\n//| where series_partial_sf(reads, 0) == false\n| extend (p, ps)=series_periods_detect(reads, 0, 24, 1)\n| mvexpand p to typeof(double), ps to typeof(double)\n| where ps > 0.7\n| extend series_fit_line(reads)\n| top 2 by series_fit_line_reads_slope asc\n| render timechart with(title='Top 2')",
+            "outputs": []
+        },
+        {
+            "kind": "code",
+            "source": "let min_t = toscalar(telemetry | summarize min(eventtime)); \nlet max_t = toscalar(telemetry | summarize max(eventtime));\ntelemetry\n| where engineid == 'engine006'\n| make-series reads=avg(corrected_core_speed) on eventtime in range(min_t, max_t, 10m) by engineid\n| extend s_seasonal = series_seasonal(reads)  // forecast 7 hours forward\n// | render timechart \n//| where series_partial_sf(reads, 0) == false\n//| extend (p, ps)=series_periods_detect(reads, 0, 24, 1)\n//| mvexpand p to typeof(double), ps to typeof(double)\n//| where ps > 0.7\n//| extend series_fit_line(reads)\n//| top 1 by series_fit_line_reads_slope asc\n| render timechart with(title='Top 2')\n\n",
+            "outputs": []
+        },
+        {
+            "kind": "code",
+            "source": "",
+            "outputs": []
+        }
+    ],
+    "metadata": {
+        "connection": {
+            "cluster": "https://savanhtimetravel.westeurope.kusto.windows.net",
+            "database": "enginedata"
+        }
+    }
+}
