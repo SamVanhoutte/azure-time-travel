@@ -1,0 +1,29 @@
+let min_t = toscalar(SunspotHistory | summarize min(Date)); 
+let max_t = toscalar(SunspotHistory | summarize max(Date));
+SunspotHistory
+| make-series num=sum(Sunspots) default=0 on Date from min_t to max_t step 30d
+| render timechart 
+
+let min_t = toscalar(SunspotHistory | summarize min(Date)); 
+let max_t = toscalar(SunspotHistory | summarize max(Date));
+SunspotHistory
+| make-series num=sum(Sunspots) default=0 on Date from min_t to max_t step 30d
+| project (periods, scores) = series_periods_detect(num, 0., 30d/2h, 2) //to detect the periods in the time series
+| mv-expand periods, scores
+| extend days=2h*todouble(periods)/1d
+
+let min_t = toscalar(SunspotHistory | summarize min(Date)); 
+let max_t = toscalar(SunspotHistory | summarize max(Date));
+SunspotHistory
+| make-series spots=sum(Sunspots) default=0 on Date from min_t to max_t step 31d
+| extend (seasonal, trend, baseline, residual) = series_decompose(spots, -1, 'linefit')  //  decomposition of a set of time series to seasonal, trend, residual, and baseline (seasonal+trend)
+| render timechart with(title='Sunspot data, decomposition', ysplit=panels)
+
+let min_t = toscalar(SunspotHistory | summarize min(Date)); 
+let max_t = datetime(2017-01-01 00:00);
+let dt = 30d;
+let horizon=365d;
+SunspotHistory
+| make-series spots=avg(Sunspots) on Date from min_t to max_t+horizon step dt 
+| extend forecast = series_decompose_forecast(spots, toint(horizon/dt))
+| render timechart with(title='Sunspot data, prediction', ysplit=panels)

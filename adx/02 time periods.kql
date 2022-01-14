@@ -1,10 +1,7 @@
-let min_t = toscalar(telemetry | summarize min(eventtime)); 
-let max_t = toscalar(telemetry | summarize max(eventtime));
+let min_t = ago(5h); //toscalar(telemetry | summarize min(eventtime)); 
+let max_t = now();   //toscalar(telemetry | summarize max(eventtime));
 telemetry
-| make-series reads=avg(corrected_core_speed) on eventtime in range(min_t, max_t, 10m) by engineid
-| extend (p, ps)=series_periods_detect(reads, 0, 24, 1)
-| mvexpand p to typeof(double), ps to typeof(double)
-| where ps > 0.7
-| extend series_fit_line(reads)
-| top 2 by series_fit_line_reads_slope asc
-| render timechart with(title='Top 2')
+| where engineid == 'engine006'
+| make-series reads=avg(temp_hpc_outlet) on eventtime in range(min_t, max_t, 10m) by engineid
+| extend y_forcasted = series_decompose_forecast(reads, 7) // forecast 7 hours forward
+| render timechart with(title='Expected values next 7 hours')
