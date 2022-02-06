@@ -10,7 +10,7 @@ jobs:
   data-update:
     runs-on: ubuntu-20.04
     env:
-      iot-folder: src/CotacolApp
+      iot-folder: data/update
 
     steps:
     - uses: actions/checkout@master
@@ -21,9 +21,7 @@ jobs:
     needs: data-update
     runs-on: ubuntu-20.04
     env:
-      working-directory: src/CotacolApp
-      app-name: cotacol-hunting-app
-      slot-name: test  
+      working-directory: build
 
     steps:
     - name: Setup python
@@ -33,12 +31,14 @@ jobs:
 
     - name: Execute model training script # run the run.py to get the latest data
       run: |
-        python build/train.py
+        python train.py
 
 
   register-model:
     needs: train-model
     runs-on: ubuntu-20.04
+    env:
+      working-directory: build
 
     steps:
     - name: Setup python
@@ -48,12 +48,14 @@ jobs:
 
     - name: Register model to AzureML # run the run.py to get the latest data
       run: |
-        python build/register.py
+        python register.py
 
 
   deploy-service:
     needs: register-model
     runs-on: ubuntu-20.04
+    env:
+      working-directory: build
 
     steps:
     - name: Setup python
@@ -63,4 +65,4 @@ jobs:
 
     - name: Register model to AzureML # run the run.py to get the latest data
       run: |
-        python build/deploy.py
+        python deploy.py
