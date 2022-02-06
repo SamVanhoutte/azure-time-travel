@@ -1,0 +1,66 @@
+name: Automate time travel model release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+
+  data-update:
+    runs-on: ubuntu-20.04
+    env:
+      iot-folder: src/CotacolApp
+
+    steps:
+    - uses: actions/checkout@master
+
+    - run: echo Update dataset with new IoT Data
+
+  train-model:
+    needs: data-update
+    runs-on: ubuntu-20.04
+    env:
+      working-directory: src/CotacolApp
+      app-name: cotacol-hunting-app
+      slot-name: test  
+
+    steps:
+    - name: Setup python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8 #install the python needed
+
+    - name: Execute model training script # run the run.py to get the latest data
+      run: |
+        python train.py
+
+
+  register-model:
+    needs: train-model
+    runs-on: ubuntu-20.04
+
+    steps:
+    - name: Setup python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8 #install the python needed
+
+    - name: Register model to AzureML # run the run.py to get the latest data
+      run: |
+        python register.py
+
+
+  deploy-service:
+    needs: register-model
+    runs-on: ubuntu-20.04
+
+    steps:
+    - name: Setup python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8 #install the python needed
+
+    - name: Register model to AzureML # run the run.py to get the latest data
+      run: |
+        python deploy.py
