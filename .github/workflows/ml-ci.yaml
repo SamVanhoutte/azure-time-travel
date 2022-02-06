@@ -33,7 +33,7 @@ jobs:
 
     - name: Execute model training script # run the run.py to get the latest data
       run: |
-        python train.py
+        python .github/workflows/train.py
 
 
   register-model:
@@ -48,7 +48,7 @@ jobs:
 
     - name: Register model to AzureML # run the run.py to get the latest data
       run: |
-        python register.py
+        python .github/workflows/register.py
 
 
   deploy-service:
@@ -63,4 +63,4 @@ jobs:
 
     - name: Register model to AzureML # run the run.py to get the latest data
       run: |
-        python deploy.py
+        python .github/workflows/deploy.py
