@@ -15,6 +15,11 @@ jobs:
     steps:
     - uses: actions/checkout@master
 
+    - name: Setup python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8 #install the python needed
+
     - run: echo Update dataset with new IoT Data
 
   train-model:
@@ -23,11 +28,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@master
-
-    - name: Setup python
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.8 #install the python needed
 
     - name: Execute model training script # run the run.py to get the latest data
       run: |
@@ -42,10 +42,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@master
-    - name: Setup python
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.8 #install the python needed
 
     - name: Register model to AzureML # run the run.py to get the latest data
       run: |
