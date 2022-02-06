@@ -83,5 +83,6 @@ def run(data):
     log_data({"predictions": str(failure_expected)})
 
     return failure_expected.tolist()
+
 def log_data(logging_data: dict):
     print(json.dumps(logging_data))
