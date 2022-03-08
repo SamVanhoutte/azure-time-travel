@@ -5,8 +5,9 @@ The engine simulator can be run in 3 different runtimes:
 - As a dotnetcore Console App, by running the `src/edgemodules/EngineModule/EngineSimulatorModule` project and providing the correct configuration options in the `appsettings.json` file.
 - As a docker container, by executing the following commands (and passing the configuration options as Environment Variables):
     ```
-    docker run --rm -it -e iothub__IoTHubOwnerConnectionString=xxx savanh/engine-module:latest
+    docker run --rm -it -e iothub__IoTHubOwnerConnectionString="xxx" savanh/engine-module:latest
     ```
+    - Replace the xxx with your connection string and put the connection string between quotes
 - As an IoT Edge Module, by using the docker image `savanh/engine-module:latest` and providing the right configuration options as Environment Variables, as shown above.
 
 ## Configuration
