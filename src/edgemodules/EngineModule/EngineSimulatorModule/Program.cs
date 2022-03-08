@@ -46,8 +46,8 @@ namespace EngineSimulatorModule
             // build config
             var configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddJsonFile("appsettings.dev.json", true, true)
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: false)
+                .AddJsonFile("appsettings.dev.json", true, false)
                 .AddEnvironmentVariables()
                 .Build();
 
